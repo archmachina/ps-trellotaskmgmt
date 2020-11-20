@@ -27,7 +27,7 @@ jobs:
           submodules: true
 
       - name: Build
-        shell: ${{ matrix.shell }}
+        shell: "${{ matrix.shell }}"
         run: |
           ./Build.ps1 -Stages Build,Test
 
