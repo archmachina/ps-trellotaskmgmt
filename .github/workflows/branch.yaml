@@ -8,17 +8,13 @@ on:
       - main
 
 jobs:
-  Build:
-    name: "Build on ${{ matrix.os }} with ${{ matrix.shell }}"
+  BuildPSCore:
+    name: "Powershell Core on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        shell: [pwsh]
-        include:
-          - os: windows-latest
-            shell: powershell
 
     steps:
       - name: Checkout
@@ -27,7 +23,22 @@ jobs:
           submodules: true
 
       - name: Build
-        shell: "${{ matrix.shell }}"
+        shell: pwsh
+        run: |
+          ./Build.ps1 -Stages Build,Test
+
+  BuildPSDesktop:
+    name: "Powershell Desktop on windows-latest"
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build
+        shell: powershell
         run: |
           ./Build.ps1 -Stages Build,Test
 
