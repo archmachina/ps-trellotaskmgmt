@@ -147,6 +147,7 @@ Function Format-TrelloListName
 #>
 Function Test-TrelloValidConfiguration
 {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '')]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -170,6 +171,7 @@ Function Test-TrelloValidConfiguration
 #>
 Function Update-TrelloTasksFromTemplate
 {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -285,7 +287,7 @@ Function Update-TrelloTasksFromTemplate
                               Write-Verbose "Target list does not exist. Creating."
                               $targetList = Add-TrelloList -Session $session -BoardId $TargetBoardId -Name $components.List
                           }
-                          
+
                           # Copy the card to the target list
                           Write-Verbose "Copying card to target list"
                           $dueDate = $nextProcess.AddDays($components.Grace)
@@ -320,6 +322,7 @@ Function Update-TrelloTasksFromTemplate
 #>
 Function Update-TrelloTasksFromConfig
 {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -377,6 +380,7 @@ Function Update-TrelloTasksFromConfig
 #>
 Function Invoke-TrelloTaskUpdateService
 {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '')]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
