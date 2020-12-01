@@ -48,8 +48,7 @@
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @(
-        @{"ModuleName"="Noveris.TrelloApi";"RequiredVersion"="0.2.0"},
-        @{"ModuleName"="Noveris.SvcProc";"RequiredVersion"="0.1.3"}
+        @{"ModuleName"="Noveris.TrelloApi";"RequiredVersion"="0.2.0"}
     )
 
     # Assemblies that must be loaded prior to importing this module

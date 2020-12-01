@@ -6,7 +6,6 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 2
 
 #Requires -Modules @{"ModuleName"="Noveris.TrelloApi";"RequiredVersion"="0.2.0"}
-#Requires -Modules @{"ModuleName"="Noveris.SvcProc";"RequiredVersion"="0.1.3"}
 
 <#
 #>
@@ -74,7 +73,7 @@ Function Format-TrelloCardName
     process
     {
         # Default values, if not specified
-        $list = "Todo"
+        $list = "Scheduled"
         $grace = 0
 
         # Split name in to components
@@ -312,6 +311,7 @@ Function Update-TrelloTasksFromTemplate
             $body = [PSCustomObject]@{
                 name = "Last Processed: {0}" -f ($now.ToString("yyyy/MM/dd HH:mm"))
                 desc = "Next Process: {0}" -f ($nextProcess.ToString("o"))
+                due = [DateTime]::new($nextProcess.Year, $nextProcess.Month, $nextProcess.Day, 15, 0, 0, [System.DateTimeKind]::Local)
             } | ConvertTo-Json
             Invoke-TrelloApi -Session $session -Endpoint ("/cards/{0}" -f $lastProcessed.id) -Method Put -Body $body | Write-Verbose
         }
@@ -357,11 +357,11 @@ Function Update-TrelloTasksFromConfig
     $errors = 0
     $entries | ForEach-Object {
         try {
-              Write-Information ("Running Configuration: " + $_.Name)
-              Write-Information ("Target Board: " + $_.TargetBoardId)
-              Write-Information ("Template Board: " + $_.TemplateBoardId)
+            Write-Information ("Running Configuration: " + $_.Name)
+            Write-Information ("Target Board: " + $_.TargetBoardId)
+            Write-Information ("Template Board: " + $_.TemplateBoardId)
 
-              Update-TrelloTasksFromTemplate -Session $session -Name $_.Name -TemplateBoardId $_.TemplateBoardId -TargetBoardId $_.TargetBoardId
+            Update-TrelloTasksFromTemplate -Session $session -Name $_.Name -TemplateBoardId $_.TemplateBoardId -TargetBoardId $_.TargetBoardId -Verbose
         } catch {
             Write-Warning "Failed to process board: $_"
             $errors++
@@ -373,66 +373,5 @@ Function Update-TrelloTasksFromConfig
     if ($errors -gt 0)
     {
         Write-Error "Errors during processing. May have partially processed."
-    }
-}
-
-<#
-#>
-Function Invoke-TrelloTaskUpdateService
-{
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '')]
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$ConfigPath,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$SessionPath,
-
-        [Parameter(Mandatory=$false)]
-        [ValidateNotNull()]
-        [int]$Iterations = 1,
-
-        [Parameter(Mandatory=$false)]
-        [ValidateSet("Start", "Finish")]
-        [string]$WaitFrom = "Start",
-
-        [Parameter(Mandatory=$false)]
-        [ValidateNotNull()]
-        [int]$WaitSeconds = 0,
-
-        [Parameter(Mandatory=$false)]
-        [ValidateNotNull()]
-        [string]$LogPath = "",
-
-        [Parameter(Mandatory=$false)]
-        [int]$RotateSizeKB = 128,
-
-        [Parameter(Mandatory=$false)]
-        [int]$PreserveCount = 5
-    )
-
-    process
-    {
-        # Service command block
-        $block = {
-            Update-TrelloTasksFromConfig -ConfigPath $ConfigPath -SessionPath $SessionPath
-        }
-
-        # Build service parameters
-        $serviceParams = @{
-            ScriptBlock = $block
-            Iterations = $Iterations
-            WaitFrom = $WaitFrom
-            WaitSeconds = $WaitSeconds
-            LogPath = $LogPath
-            RotateSizeKB = $RotateSizeKB
-            PreserveCount = $PreserveCount
-        }
-
-        # Actual service invocation
-        Invoke-ServiceRun @serviceParams
     }
 }
