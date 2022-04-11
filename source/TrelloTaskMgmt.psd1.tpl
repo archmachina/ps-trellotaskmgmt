@@ -1,8 +1,8 @@
-# Module manifest for Noveris.TrelloTaskMgmt
+# Module manifest for TrelloTaskMgmt
 
 @{
     # Script module or binary module file associated with this manifest.
-    RootModule = 'Noveris.TrelloTaskMgmt.psm1'
+    RootModule = 'TrelloTaskMgmt.psm1'
 
     # Version number of this module.
     ModuleVersion = '__FULLVERSION__'
@@ -14,19 +14,19 @@
     )
 
     # ID used to uniquely identify this module
-    GUID = 'c10ed210-67e9-4cd6-a79c-0d8166255c91'
+    GUID = 'dc847550-0390-4126-832b-fb9a4666750b'
 
     # Author of this module
-    Author = 'Noveris Pty Ltd'
+    Author = 'Jesse Reichman'
 
     # Company or vendor of this module
-    CompanyName = 'Noveris Pty Ltd'
+    CompanyName = 'ArchMachina'
 
     # Copyright statement for this module
-    Copyright = '(c) 2019 Noveris Pty Ltd. All rights reserved.'
+    Copyright = '(c) 2020 Jesse Reichman. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'Trello Api module'
+    Description = 'Trello Task Management'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -48,7 +48,7 @@
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @(
-        @{"ModuleName"="Noveris.TrelloApi";"RequiredVersion"="0.2.0"}
+        @{"ModuleName"="TrelloApi";"RequiredVersion"="0.3.0"}
     )
 
     # Assemblies that must be loaded prior to importing this module
@@ -66,7 +66,7 @@
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules = @(
-        'Noveris.TrelloTaskMgmt.psm1'
+        'TrelloTaskMgmt.psm1'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
@@ -90,7 +90,7 @@
 
     # List of all modules packaged with this module
     #ModuleList = @(
-    #    'Noveris.TrelloTaskMgmt.psm1'
+    #    'TrelloTaskMgmt.psm1'
     #)
 
     # List of all files packaged with this module
@@ -109,10 +109,10 @@
             )
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/noveris-inf/ps-trellotaskmgmt/blob/main/LICENSE'
+            LicenseUri = 'https://github.com/archmachina/ps-trellotaskmgmt/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/noveris-inf/ps-trellotaskmgmt'
+            ProjectUri = 'https://github.com/archmachina/ps-trellotaskmgmt'
 
             # A URL to an icon representing this module.
             # IconUri = ''

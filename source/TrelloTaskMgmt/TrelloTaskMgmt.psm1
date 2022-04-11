@@ -5,7 +5,7 @@ $InformationPreference = "Continue"
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 2
 
-#Requires -Modules @{"ModuleName"="Noveris.TrelloApi";"RequiredVersion"="0.2.0"}
+#Requires -Modules @{"ModuleName"="TrelloApiTools";"RequiredVersion"="0.3.0"}
 
 <#
 #>
